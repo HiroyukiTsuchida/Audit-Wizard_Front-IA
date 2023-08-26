@@ -70,14 +70,14 @@ def communicate(user_input, bot_response_placeholder, model):
 
 # サイドバーで機能を選択
 selected_option = st.sidebar.selectbox(
-    "機能を選択してください",
+    "Select function | 機能を選択してください",
     ["Q&A", "Audit Planning", "Inspection", "Data Analytics", "Risk Assessment", "RootCause Analysis","Continuous Monitoring"], # Continuous Monitoringを追加
     key="selectbox_key"  # 固定のキーを指定する
 )
 
 # モデルを選択
 model = st.sidebar.selectbox(
-    "モデルを選択してください",
+    "Select Model | モデルを選択してください",
     ["gpt-3.5-turbo-16k", "gpt-4"],
     key="model_selectbox_key"  # 固定のキーを指定する
 )
@@ -88,13 +88,13 @@ if selected_option == "Q&A":
     st.title("Audit Wizard")
 
     # Create a placeholder for the user's input
-    user_input = st.text_area("内部監査やGRCに関する質問を入力してください。", value=st.session_state.get("user_input_Q&A", ""))
+    user_input = st.text_area("Enter your questions about internal audits or GRC. | 内部監査やGRCに関する質問を入力してください。", value=st.session_state.get("user_input_Q&A", ""))
 
     # Create a placeholder for the bot's responses
     bot_response_placeholder = st.empty()
 
     # Execute the communicate function when the user presses the 'Submit' button
-    if st.button("実行", key="send_button_Q&A"):
+    if st.button("Send message", key="send_button_Q&A"):
         st.session_state["user_input_Q&A"] = user_input
         communicate(st.session_state["user_input_Q&A"], bot_response_placeholder, model)
 
@@ -105,23 +105,23 @@ elif selected_option == "Audit Planning":
     st.title("Audit Planning")
 
     # チェックボックス
-    checkboxes = ["監査概要","監査項目・着眼点","想定されるリスク", "期待されるコントロール", "規準（クライテリア）", "インタビュー項目","ToD（デザインの有効性評価）","ToE（運用状況の有効性評価）", "監査証拠（資料名・データ名）", "対象部門","想定される発見事項"]
+    checkboxes = ["Audit Outline | 監査概要","Audit Items and Focus | 監査項目・着眼点","Assumed Risks | 想定されるリスク", "Expected Controls | 期待されるコントロール", "Criteria | 規準", "Interview Items | インタビュー項目","Test of Design | デザインの有効性評価","Test of Effectiveness | 運用状況の有効性評価", "Audit evidence(document/data) | 監査証拠（資料名・データ名）", "Department | 対象部門","Assumed Findings | 想定される発見事項"]
     selected_items = []
     for checkbox in checkboxes:
         if st.sidebar.checkbox(checkbox, key=f"checkbox_{checkbox}"):
             selected_items.append(checkbox)
 
     # 右側の入力フォーム
-    theme = st.text_area("検証したいテーマを入力し、左からメニューを選んで、実行ボタンを押してください。", "", key="theme_input")
+    theme = st.text_area("Enter the theme you wish to verify, select a menu from the left, and press the Send message button. | 検証したいテーマを入力し、左からメニューを選んで、実行ボタンを押してください。", "", key="theme_input")
 
     # 追加：補足情報の入力フィールド
-    additional_info = st.text_area("補足情報を入力してください。", "", key="additional_info")
+    additional_info = st.text_area("Enter the supplementary information. | 補足情報を入力してください。", "", key="additional_info")
 
     # Create a placeholder for the bot's responses
     bot_response_placeholder = st.empty()
 
-    if st.button("実行", key="send_button_auditors_view"):
-        if "ToD（デザインの有効性評価）" in selected_items or "ToE（運用状況の有効性評価）" in selected_items:
+    if st.button("Send message", key="send_button_auditors_view"):
+        if "Test of Design | デザインの有効性評価" in selected_items or "Test of Effectiveness | 運用状況の有効性評価" in selected_items:
             # ToD or ToE を選択した場合に送信するメッセージ
             initial_prompt = (
                 "あなたは優秀な内部監査人です。\n"
@@ -158,13 +158,13 @@ elif selected_option == "Data Analytics":
     data = st.text_area("検証するデータを入力してください", height=200, key="data_input")
 
     # 検証作業の内容を入力するフィールド
-    verification = st.text_input("検証作業の内容を入力してください", key="verification_input")
+    verification = st.text_input("Please enter the details of your validation work | 検証作業の内容を入力してください", key="verification_input")
 
     # Create a placeholder for the bot's responses
     bot_response_placeholder = st.empty()
 
     # ボタンを押すと、初期プロンプトが生成され、communicate関数が実行される
-    if st.button("実行", key="send_button_data_analytics"):
+    if st.button("Send message", key="send_button_data_analytics"):
         initial_prompt = (
             f"以下のデータについて「{verification}」を実施してください。。\n"
             f"\n{data}"
@@ -179,14 +179,14 @@ elif selected_option == "Inspection":
     st.title("Inspection")
 
     # 入力フィールドを３つ表示
-    input1 = st.text_area("文書")
-    input2 = st.text_area("クライテリア")
+    input1 = st.text_area("Document | 文書")
+    input2 = st.text_area("Criteria | クライテリア")
 
     # Create a placeholder for the bot's responses
     bot_response_placeholder = st.empty()
 
     # ボタンを押すと、初期プロンプトが生成され、communicate関数が実行される
-    if st.button("実行", key="send_button_review_procedure"):
+    if st.button("Send message", key="send_button_review_procedure"):
         initial_prompt = (
             f"以下の文書について「{input2}」をクライテリアにして監査して。"
             "文書："
@@ -203,44 +203,44 @@ elif selected_option == "Risk Assessment":
     st.title("Risk Assessment")
 
     # サイドバーのチェックボックス
-    checkboxes = ["監査ユニバース","ボトムアップ","トップダウン","年度監査計画書"]
+    checkboxes = ["Audit Universe | 監査ユニバース","Bottom-UP | ボトムアップ","Top-Down | トップダウン","Annual Audit Plan | 年度監査計画書"]
     selected_items = []
     for checkbox in checkboxes:
         if st.sidebar.checkbox(checkbox, key=f"checkbox_offsite_{checkbox}"):
             selected_items.append(checkbox)
 
     # 右側の入力フィールド
-    company_info = st.text_area("会社の情報を入力してください。", "", key="company_info_input")
+    company_info = st.text_area("Please enter the company information. | 会社の情報を入力してください。", "", key="company_info_input")
 
     # 右側の入力フィールド
     external_env_target = st.text_area("外部環境の状況を入力してください", "", key="monitoring_target_input")
 
     # 監査ユニバースの入力フィールド
-    audit_universe = st.text_area("監査ユニバースを入力してください", "", key="audit_universe")
+    audit_universe = st.text_area("Please enter the status of the external environment. | 監査ユニバースを入力してください", "", key="audit_universe")
 
     # 追加：補足情報の入力フィールド
-    additional_info = st.text_area("補足情報を入力してください。", "", key="additional_info")
+    additional_info = st.text_area("Please enter supplemental information. | 補足情報を入力してください。", "", key="additional_info")
 
     # Create a placeholder for the bot's responses
     bot_response_placeholder = st.empty()
 
     # Execute the communicate function when the user presses the 'Submit' button
-    if st.button("実行", key="send_button_offsite_monitoring"):
+    if st.button("Send message", key="send_button_offsite_monitoring"):
 
         # Build the initial prompt based on selected checkboxes
         initial_prompt_parts = ["あなたは優秀な内部監査人で、会社のリスクを特定・評価するエキスパートです。"]
-        if "監査ユニバース" in selected_items:
+        if "Audit Universe | 監査ユニバース" in selected_items:
             initial_prompt_parts.append(
                 f"{company_info}の監査ユニバース（事業、業務、プロジェクト等）教えて。出力は１段階のインデントで短く記載して。\n"
             )
-        if "トップダウン" in selected_items:
+        if "Top-Down | トップダウン" in selected_items:
             initial_prompt_parts.append(
                 "以下を踏まえたマクロリスクアセスメント（PEST分析）をしてください。一部想像が含まれても構いません。\n"
                 f"会社の情報:\n{company_info}\n"
                 f"外部環境の状況:\n{external_env_target}\n"
                 f"補足情報:\n{additional_info}\n"
             )
-        if "ボトムアップ" in selected_items:
+        if "Bottom-UP | ボトムアップ" in selected_items:
           initial_prompt_parts.append(
                 "以下を参考にして組織全体を対象にしたRisk Assessmentを実施して下さい。\n"
                 "縦軸に監査ユニバースを記載してください。\n"
@@ -252,7 +252,7 @@ elif selected_option == "Risk Assessment":
                 f"補足情報:\n{additional_info}\n"
                 "表形式で出力してください。"
             )
-        if "年度監査計画書" in selected_items:
+        if "Annual Audit Plan | 年度監査計画書" in selected_items:
             initial_prompt_parts.append(
                 "###以下の内容を踏まえた年度監査計画書を作成してください。\n"
                 f"会社情報：\n{company_info}\n"
@@ -280,23 +280,23 @@ elif selected_option == "Continuous Monitoring":
     st.title("Continuous Monitoring")
 
     # サイドバーのチェックボックス
-    checkboxes = ["モニタリング項目", "入手すべき資料やデータ", "検知すべき異常値や傾向"]
+    checkboxes = ["Monitoring Item | モニタリング項目", "Documents and data to be obtained | 入手すべき資料やデータ", "Abnormal values or trends to be detected | 検知すべき異常値や傾向"]
     selected_items = []
     for checkbox in checkboxes:
         if st.sidebar.checkbox(checkbox, key=f"checkbox_offsite_{checkbox}"):
             selected_items.append(checkbox)
 
     # 右側の入力フィールド
-    monitoring_target = st.text_input("モニタリング対象を入力してください。", "", key="monitoring_target_input")
+    monitoring_target = st.text_input("Please enter monitoring targets. | モニタリング対象を入力してください。", "", key="monitoring_target_input")
 
     # 追加：補足情報の入力フィールド
-    additional_info = st.text_area("補足情報を入力してください。", "", key="additional_info")
+    additional_info = st.text_area("Please enter supplemental information. | 補足情報を入力してください。", "", key="additional_info")
 
     # Create a placeholder for the bot's responses
     bot_response_placeholder = st.empty()
 
     # Execute the communicate function when the user presses the 'Submit' button
-    if st.button("実行", key="send_button_offsite_monitoring"):
+    if st.button("Send message", key="send_button_offsite_monitoring"):
         initial_prompt = (
             "あなたは優秀な内部監査人で、継続的モニタリングのエキスパートです。\n"
             f"「{monitoring_target}」をモニタリング対象とした時の"
@@ -315,32 +315,32 @@ elif selected_option == "RootCause Analysis":
     st.title("RootCause Analysis")
 
     # サイドバーのチェックボックス
-    checkboxes = ["問題の事実", "原因分析", "改善提案"]
+    checkboxes = ["Problem Fact | 問題の事実", "Cause Analysis | 原因分析", "Improvement Suggestions | 改善提案"]
     selected_items = []
     for checkbox in checkboxes:
         if st.sidebar.checkbox(checkbox, key=f"checkbox_offsite_{checkbox}"):
             selected_items.append(checkbox)
 
     # 右側の入力フィールド
-    fact_info = st.text_area("発見した問題・課題の内容を入力してください。", "", key="fact_info_input")
+    fact_info = st.text_area("Please enter the nature of the problem or issue you have discovered. | 発見した問題・課題の内容を入力してください。", "", key="fact_info_input")
 
     # 追加：補足情報の入力フィールド
-    additional_info = st.text_area("補足情報を入力してください。", "", key="additional_info")
+    additional_info = st.text_area("Please enter supplemental information. | 補足情報を入力してください。", "", key="additional_info")
 
     # Create a placeholder for the bot's responses
     bot_response_placeholder = st.empty()
 
     # Execute the communicate function when the user presses the 'Submit' button
-    if st.button("実行", key="send_button_offsite_monitoring"):
+    if st.button("Send message", key="send_button_offsite_monitoring"):
 
         # Build the initial prompt based on selected checkboxes
         initial_prompt_parts = ["あなたは優秀な内部監査人で、問題や発見の発見・把握や根本原因分析のエキスパートです。"]
-        if "問題の事実" in selected_items:
+        if "Problem Fact | 問題の事実" in selected_items:
             initial_prompt_parts.append(
                 f"「・{fact_info}\n・{additional_info}\n」を踏まえ、問題の事実を詳しく記載してください。一部想像が含まれても構いません。想定・示唆される潜在的なリスクにも言及してください。\n"
                 "文章は能動態かつ過去形で記載してください。語調は「ですます調」ではなく「である調」で記載してください。\n"
             )
-        if "原因分析" in selected_items:
+        if "Cause Analysis | 原因分析" in selected_items:
             initial_prompt_parts.append(
                 f"「・{fact_info}\n・{additional_info}\n」を踏まえ、以下の３つの観点から原因を分析してください。\n"
                 "直接原因（問題を引き起こした直接の原因）\n"
@@ -349,7 +349,7 @@ elif selected_option == "RootCause Analysis":
                 "原因の記載にあたっては、箇条書きで挙げつつ、原因を特定または推察した理由をできるだけ詳しく具体的に記載してください。\n"
                 "語調は「ですます調」ではなく「である調」で記載してください。\n"
             )
-        if "改善提案" in selected_items:
+        if "Improvement Suggestions | 改善提案" in selected_items:
             initial_prompt_parts.append(
                 f"「・{fact_info}\n・{additional_info}\n」を踏まえ、改善提案を作成してください"
             )
