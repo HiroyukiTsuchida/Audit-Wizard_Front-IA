@@ -109,7 +109,7 @@ elif selected_option == "Translation":
     user_input = st.text_area("Enter the text you wish to translate and press the Send message button. | 翻訳したい文章を入力し、送信ボタンを押してください。", height=200, key="user_input_translation")
 
     # 追加：補足情報の入力フィールド
-    additional_info = st.text_area("Please enter supplementary information. | 補足情報を入力してください。", "", key="additional_info")
+    additional_info = st.text_area("Please enter supplemental information. | 補足情報を入力してください。", "", key="additional_info")
 
     # Create a placeholder for the bot's responses
     bot_response_placeholder = st.empty()
@@ -210,7 +210,7 @@ elif selected_option == "Audit Planning":
     theme = st.text_area("Enter the theme you wish to verify, select a menu from the left, and press the Send message button. | 検証したいテーマを入力し、左からメニューを選んで、送信ボタンを押してください。", "", key="theme_input")
 
     # 追加：補足情報の入力フィールド
-    additional_info = st.text_area("Please enter supplementary information. | 補足情報を入力してください。", "", key="additional_info")
+    additional_info = st.text_area("Please enter supplemental information. | 補足情報を入力してください。", "", key="additional_info")
 
     # Create a placeholder for the bot's responses
     bot_response_placeholder = st.empty()
@@ -220,7 +220,7 @@ elif selected_option == "Audit Planning":
             # ToD or ToE を選択した場合に送信するメッセージ
             initial_prompt = (
                 "あなたは優秀な内部監査人です。\n"
-                f"{theme}の有効性評価の方法を設計面と運用面のそれぞれから。\n"
+                f"{theme}の有効性評価の方法を設計面と運用面のそれぞれから説明してください。\n"
                 "運用の有効性評価は監査で検証すべきサンプルの件数も記載。件数はコントロールが実施される頻度に応じて決まる。\n"
                 "例えばITコントロールの場合は1件サンプルを入手する。\n"
                 "例えば人手によるマニュアルコントロールが日次または1日複数回実施される場合は50件サンプルを入手する。\n"
@@ -274,8 +274,8 @@ elif selected_option == "Inspection":
     st.title("Inspection")
 
     # 入力フィールドを３つ表示
-    input1 = st.text_area("Document") # 文書
-    input2 = st.text_area("Criteria") # クライテリア
+    input1 = st.text_area("Document | 文書")
+    input2 = st.text_area("Criteria | クライテリア")
 
     # Create a placeholder for the bot's responses
     bot_response_placeholder = st.empty()
@@ -339,11 +339,11 @@ elif selected_option == "Risk Assessment":
           initial_prompt_parts.append(
                 "以下を参考にして組織全体を対象にしたRisk Assessmentを実施して下さい。\n"
                 "縦軸に監査ユニバースを記載してください。\n"
-                "横軸には固有リスクとして戦略リスク・ガバナンスリスク・市場リスク・信用リスク・流動性リスク・オペリスク・人材リスク・コンプライアンスリスク,ITリスク・セキュリティリスク・外部委託リスク・事業継続リスクの順で列を表示して、それぞれを3/2/1で評価し、最終列に合計値を記載）、コントロール（Satisfactory/Needs Improvement/Weakの3段階で評価）、残存リスク（H/M/Lの3段階で評価）、優先度、監査時期を記載してください。最終行に縦軸の合計値も記載してください。\n"
-                "固有リスク、コントロール、残存リスクの評価の定義を記載してください。何をもって3/2/1などに評価するかを定性的・定量的な観点から記載してください。固有リスクであれば財務的な影響度、コンプライアンス的な影響度、レピュテーション的な影響度といった観点があります。コントロールであれば、規程類の整備状況、自主点検の結果、直近の監査結果といった観点があります。"
-                "固有リスクについては、表のそれぞれのセルについて、なぜその評価結果としたのかできるだけ詳しく説明してください。"
-                "出力の最後に全体的な評価のサマリーを詳しく記載して下さい。"
-                f"監査ユニバース:\n{audit_universe}\n"
+                "横軸にはInherent RiskとしてStrategy Risk・Governance Risk・Market Risk・Credit Risk・Liquidity Risk・Operational Risk・HR Risk・Compliance Risk・IT Risk・Security Risk・Outsourcing Risk・BCP Riskの順で列を表示して、それぞれを3/2/1で評価し、最終列にTotalを記載）、Control（Satisfactory/Needs Improvement/Weakの3段階で評価）、Residual Risk（H/M/Lの3段階で評価）、Priority、Audit Timingを記載してください。最終行に縦軸のTotalも記載してください。\n" # 戦略リスク・ガバナンスリスク・市場リスク・信用リスク・流動性リスク・オペリスク・人材リスク・コンプライアンスリスク,ITリスク・セキュリティリスク・外部委託リスク・事業継続リスク
+                "Inherent Risk、Control、Residual Riskの評価の定義を記載してください。何をもって3/2/1などに評価するかを定性的・定量的な観点から記載してください。Inherent Riskであれば財務的な影響度、コンプライアンス的な影響度、レピュテーション的な影響度といった観点があります。Controlであれば、規程類の整備状況、自主点検の結果、直近の監査結果といった観点があります。"
+                "Inherent Riskについては、表のそれぞれのセルについて、なぜその評価結果としたのかできるだけ詳しく説明してください。"
+                "出力の最後にSummary of Evaluationを詳しく記載して下さい。"
+                f"Audit Universe:\n{audit_universe}\n"
                 f"補足情報:\n{additional_info}\n"
                 "表形式で出力してください。"
             )
