@@ -70,14 +70,14 @@ def communicate(user_input, bot_response_placeholder, model):
 
 # サイドバーで機能を選択
 selected_option = st.sidebar.selectbox(
-    "Select Function | 機能を選択してください",
+    "Select Function", # 機能を選択してください
     ["Q&A", "Translation", "Audit Planning", "Inspection", "Data Analytics", "Risk Assessment", "RootCause Analysis","Continuous Monitoring"], # Continuous Monitoringを追加
     key="selectbox_key"  # 固定のキーを指定する
 )
 
 # モデルを選択
 model = st.sidebar.selectbox(
-    "Select Model | モデルを選択してください",
+    "Select Model", # モデルを選択してください
     ["gpt-3.5-turbo-16k", "gpt-4"],
     key="model_selectbox_key"  # 固定のキーを指定する
 )
@@ -106,7 +106,7 @@ elif selected_option == "Translation":
     st.title("Translation")
 
     # 右側の入力フォーム
-    user_input = st.text_area("Enter the text you wish to translate and press the Send message button. | 翻訳したい文章を入力し、実行ボタンを押してください。", height=200, key="user_input_translation")
+    user_input = st.text_area("Enter the text you wish to translate and press the Send message button. | 翻訳したい文章を入力し、送信ボタンを押してください。", height=200, key="user_input_translation")
 
     # 追加：補足情報の入力フィールド
     additional_info = st.text_area("Please enter supplementary information. | 補足情報を入力してください。", "", key="additional_info")
@@ -200,23 +200,23 @@ elif selected_option == "Audit Planning":
     st.title("Audit Planning")
 
     # チェックボックス
-    checkboxes = ["Audit Outline | 監査概要","Audit Items and Focus | 監査項目・着眼点","Assumed Risks | 想定されるリスク", "Expected Controls | 期待されるコントロール", "Criteria | 規準", "Interview Items | インタビュー項目","Test of Design | デザインの有効性評価","Test of Effectiveness | 運用状況の有効性評価", "Audit evidence(document/data) | 監査証拠（資料名・データ名）", "Department | 対象部門","Assumed Findings | 想定される発見事項"]
+    checkboxes = ["Audit Outline","Audit Items and Focus","Assumed Risks", "Expected Controls", "Criteria", "Interview Items","Test of Design","Test of Effectiveness", "Audit evidence(document/data name)", "Department","Assumed Findings"] # 監査概要, 監査項目・着眼点, 想定されるリスク, 期待されるコントロール, 規準, インタビュー項目, デザインの有効性評価, 運用状況の有効性評価, 監査証拠（資料名・データ名）, 対象部門, 想定される発見事項
     selected_items = []
     for checkbox in checkboxes:
         if st.sidebar.checkbox(checkbox, key=f"checkbox_{checkbox}"):
             selected_items.append(checkbox)
 
     # 右側の入力フォーム
-    theme = st.text_area("Enter the theme you wish to verify, select a menu from the left, and press the Send message button. | 検証したいテーマを入力し、左からメニューを選んで、実行ボタンを押してください。", "", key="theme_input")
+    theme = st.text_area("Enter the theme you wish to verify, select a menu from the left, and press the Send message button. | 検証したいテーマを入力し、左からメニューを選んで、送信ボタンを押してください。", "", key="theme_input")
 
     # 追加：補足情報の入力フィールド
-    additional_info = st.text_area("Enter the supplementary information. | 補足情報を入力してください。", "", key="additional_info")
+    additional_info = st.text_area("Please enter supplementary information. | 補足情報を入力してください。", "", key="additional_info")
 
     # Create a placeholder for the bot's responses
     bot_response_placeholder = st.empty()
 
     if st.button("Send message", key="send_button_auditors_view"):
-        if "Test of Design | デザインの有効性評価" in selected_items or "Test of Effectiveness | 運用状況の有効性評価" in selected_items:
+        if "Test of Design" in selected_items or "Test of Effectiveness" in selected_items:
             # ToD or ToE を選択した場合に送信するメッセージ
             initial_prompt = (
                 "あなたは優秀な内部監査人です。\n"
@@ -274,8 +274,8 @@ elif selected_option == "Inspection":
     st.title("Inspection")
 
     # 入力フィールドを３つ表示
-    input1 = st.text_area("Document | 文書")
-    input2 = st.text_area("Criteria | クライテリア")
+    input1 = st.text_area("Document") # 文書
+    input2 = st.text_area("Criteria") # クライテリア
 
     # Create a placeholder for the bot's responses
     bot_response_placeholder = st.empty()
@@ -298,7 +298,7 @@ elif selected_option == "Risk Assessment":
     st.title("Risk Assessment")
 
     # サイドバーのチェックボックス
-    checkboxes = ["Audit Universe | 監査ユニバース","Bottom-UP | ボトムアップ","Top-Down | トップダウン","Annual Audit Plan | 年度監査計画書"]
+    checkboxes = ["Audit Universe","Bottom-UP","Top-Down","Annual Audit Plan"] # 監査ユニバース, ボトムアップ, トップダウン, 年度監査計画書
     selected_items = []
     for checkbox in checkboxes:
         if st.sidebar.checkbox(checkbox, key=f"checkbox_offsite_{checkbox}"):
@@ -308,10 +308,10 @@ elif selected_option == "Risk Assessment":
     company_info = st.text_area("Please enter the company information. | 会社の情報を入力してください。", "", key="company_info_input")
 
     # 右側の入力フィールド
-    external_env_target = st.text_area("Please enter the status of the external environment | 外部環境の状況を入力してください", "", key="monitoring_target_input")
+    external_env_target = st.text_area("Please enter the status of the external environment. | 外部環境の状況を入力してください", "", key="monitoring_target_input")
 
     # 監査ユニバースの入力フィールド
-    audit_universe = st.text_area("Please enter the status of the external environment. | 監査ユニバースを入力してください", "", key="audit_universe")
+    audit_universe = st.text_area("Please enter the audit universe. | 監査ユニバースを入力してください", "", key="audit_universe")
 
     # 追加：補足情報の入力フィールド
     additional_info = st.text_area("Please enter supplemental information. | 補足情報を入力してください。", "", key="additional_info")
@@ -324,18 +324,18 @@ elif selected_option == "Risk Assessment":
 
         # Build the initial prompt based on selected checkboxes
         initial_prompt_parts = ["あなたは優秀な内部監査人で、会社のリスクを特定・評価するエキスパートです。"]
-        if "Audit Universe | 監査ユニバース" in selected_items:
+        if "Audit Universe" in selected_items:
             initial_prompt_parts.append(
                 f"{company_info}の監査ユニバース（事業、業務、プロジェクト等）教えて。出力は１段階のインデントで短く記載して。\n"
             )
-        if "Top-Down | トップダウン" in selected_items:
+        if "Top-Down" in selected_items:
             initial_prompt_parts.append(
                 "以下を踏まえたマクロリスクアセスメント（PEST分析）をしてください。一部想像が含まれても構いません。\n"
                 f"会社の情報:\n{company_info}\n"
                 f"外部環境の状況:\n{external_env_target}\n"
                 f"補足情報:\n{additional_info}\n"
             )
-        if "Bottom-UP | ボトムアップ" in selected_items:
+        if "Bottom-UP" in selected_items:
           initial_prompt_parts.append(
                 "以下を参考にして組織全体を対象にしたRisk Assessmentを実施して下さい。\n"
                 "縦軸に監査ユニバースを記載してください。\n"
@@ -347,7 +347,7 @@ elif selected_option == "Risk Assessment":
                 f"補足情報:\n{additional_info}\n"
                 "表形式で出力してください。"
             )
-        if "Annual Audit Plan | 年度監査計画書" in selected_items:
+        if "Annual Audit Plan" in selected_items:
             initial_prompt_parts.append(
                 "###以下の内容を踏まえた年度監査計画書を作成してください。\n"
                 f"会社情報：\n{company_info}\n"
@@ -375,7 +375,7 @@ elif selected_option == "Continuous Monitoring":
     st.title("Continuous Monitoring")
 
     # サイドバーのチェックボックス
-    checkboxes = ["Monitoring Item | モニタリング項目", "Documents and data to be obtained | 入手すべき資料やデータ", "Abnormal values or trends to be detected | 検知すべき異常値や傾向"]
+    checkboxes = ["Monitoring Item", "Documents and data to be obtained", "Abnormal values or trends to be detected"] # モニタリング項目, 入手すべき資料やデータ, 検知すべき異常値や傾向
     selected_items = []
     for checkbox in checkboxes:
         if st.sidebar.checkbox(checkbox, key=f"checkbox_offsite_{checkbox}"):
@@ -410,7 +410,7 @@ elif selected_option == "RootCause Analysis":
     st.title("RootCause Analysis")
 
     # サイドバーのチェックボックス
-    checkboxes = ["Problem Fact | 問題の事実", "Cause Analysis | 原因分析", "Improvement Suggestions | 改善提案"]
+    checkboxes = ["Problem Fact", "Cause Analysis", "Improvement Suggestions"] # 問題の事実, 原因分析, 改善提案
     selected_items = []
     for checkbox in checkboxes:
         if st.sidebar.checkbox(checkbox, key=f"checkbox_offsite_{checkbox}"):
@@ -430,12 +430,12 @@ elif selected_option == "RootCause Analysis":
 
         # Build the initial prompt based on selected checkboxes
         initial_prompt_parts = ["あなたは優秀な内部監査人で、問題や発見の発見・把握や根本原因分析のエキスパートです。"]
-        if "Problem Fact | 問題の事実" in selected_items:
+        if "Problem Fact" in selected_items:
             initial_prompt_parts.append(
                 f"「・{fact_info}\n・{additional_info}\n」を踏まえ、問題の事実を詳しく記載してください。一部想像が含まれても構いません。想定・示唆される潜在的なリスクにも言及してください。\n"
                 "文章は能動態かつ過去形で記載してください。語調は「ですます調」ではなく「である調」で記載してください。\n"
             )
-        if "Cause Analysis | 原因分析" in selected_items:
+        if "Cause Analysis" in selected_items:
             initial_prompt_parts.append(
                 f"「・{fact_info}\n・{additional_info}\n」を踏まえ、以下の３つの観点から原因を分析してください。\n"
                 "直接原因（問題を引き起こした直接の原因）\n"
@@ -444,7 +444,7 @@ elif selected_option == "RootCause Analysis":
                 "原因の記載にあたっては、箇条書きで挙げつつ、原因を特定または推察した理由をできるだけ詳しく具体的に記載してください。\n"
                 "語調は「ですます調」ではなく「である調」で記載してください。\n"
             )
-        if "Improvement Suggestions | 改善提案" in selected_items:
+        if "Improvement Suggestions" in selected_items:
             initial_prompt_parts.append(
                 f"「・{fact_info}\n・{additional_info}\n」を踏まえ、改善提案を作成してください"
             )
