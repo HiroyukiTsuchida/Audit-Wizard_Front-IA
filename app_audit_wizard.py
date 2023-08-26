@@ -6,7 +6,7 @@ from PIL import Image
 import requests
 
 # DeepLのAPIキーを取得
-DEEPL_API_KEY = st.secrets["DeepLAPI"]["deepl_api_key"]
+#DEEPL_API_KEY = st.secrets["DeepLAPI"]["deepl_api_key"]
 
 # DeepLのAPIを呼び出す関数
 #def translate_to_english(text):
