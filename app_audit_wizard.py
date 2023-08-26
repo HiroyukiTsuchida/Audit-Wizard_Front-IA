@@ -350,13 +350,13 @@ elif selected_option == "Risk Assessment":
         if "Annual Audit Plan" in selected_items:
             initial_prompt_parts.append(
                 "###以下の内容を踏まえた年度監査計画書を作成してください。\n"
-                f"会社情報：\n{company_info}\n"
-                f"監査対象領域：\n{audit_universe}\n"
+                f"Company Information：\n{company_info}\n"
+                f"Audit Area：\n{audit_universe}\n"
                 "###出力形式\n"
-                "・基本方針\n"
-                "・重点監査領域と主要な着眼点\n"
-                "・リソース（業務監査チーム5名、システム監査チーム2名、コンプライアンス監査チーム3名、企画グループ2名それぞれに必要な年間工数（時間）を記載。1人当たりの年間工数は1770時間換算とする。全員分の総合計も表示。）\n"
-                "・スケジュール（縦軸に監査名を記載して。横軸に12か月分のスケジュールを記載して。1つの監査は3か月で終了するようにして。監査期間には●を記載して。表形式で出力して。）\n"
+                "・Basic Policy\n"
+                "・Key Audit Areas and Key Focus Points\n"
+                "・Resources（業務監査チーム5名、システム監査チーム2名、コンプライアンス監査チーム3名、企画グループ2名それぞれに必要な年間工数（時間）を記載。1人当たりの年間工数は1770時間換算とする。全員分の総合計も表示。）\n"
+                "・Schedule（縦軸に監査名を記載して。横軸に12か月分のスケジュールを記載して。1つの監査は3か月で終了するようにして。監査期間には●を記載して。表形式で出力して。）\n"
             )
         # Combine the parts into a single string
         initial_prompt = "\n".join(initial_prompt_parts)
