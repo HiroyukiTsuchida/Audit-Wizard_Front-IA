@@ -1,6 +1,7 @@
 
 import streamlit as st
-import openai
+#import openai
+from openai import OpenAI
 import uuid
 from PIL import Image
 import requests
