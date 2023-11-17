@@ -4,6 +4,7 @@ import openai
 import uuid
 from PIL import Image
 import requests
+pip install openai==0.28
 
 # DeepLのAPIキーを取得
 #DEEPL_API_KEY = st.secrets["DeepLAPI"]["deepl_api_key"]
